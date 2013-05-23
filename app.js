@@ -5,3 +5,12 @@
  * Time: 10.16
  * To change this template use File | Settings | File Templates.
  */
+
+var test;
+
+function addAlert(){
+
+    alert('ciccio');
+
+}
+

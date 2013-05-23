@@ -1,7 +1,13 @@
-/**
- * Created with JetBrains WebStorm.
- * User: ruggerir
- * Date: 23/05/13
- * Time: 14.36
- * To change this template use File | Settings | File Templates.
- */
+function Controller1($scope) {
+    $scope.master= {};
+
+    $scope.update = function(user) {
+        $scope.master= angular.copy(user);
+    };
+
+    $scope.reset = function() {
+        $scope.user = angular.copy($scope.master);
+    };
+
+    $scope.reset();
+}
