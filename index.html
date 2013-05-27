@@ -1,30 +1,72 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="app">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="controllers.js"></script>
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+	<style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	
+    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.js"></script>
+    <script type="text/javascript" src="mongolab.js"></script>
+    <script type="text/javascript" src="controllers.js"></script>
 </head>
 <body>
-<div>
-    <label>Name:</label>
-    <input type="text" ng-model="yourName" placeholder="Enter a name here">
-    <hr>
-    <h1>Hello {{yourName}}!</h1>
+<div class="container-fluid" ng-controller="Controller1">
+<div class="row-fluid">
+	<div class="span3">
+	  <div class="well sidebar-nav">
+		<ul class="nav nav-list">
+		  <li class="nav-header">Progetti</li>
+		  <li ng-repeat="prj in projects | filter:query">
+			       <a href="#/projects/{{prj._id.$oid}}"><p>{{prj.name | uppercase}}</a>
+          </li>
+		</ul>
+	  </div><!--/.well -->
+	</div><!--/span-->
+		<div class="span9">
+		<label>Name:</label>
+		<input type="text" ng-model="yourName" placeholder="Enter a name here">
+		<hr>
+		<h1>Hello {{yourName}}!</h1>
 
-
-    <div ng-controller="Controller1">
-        <form novalidate class="simple-form">
-            Name: <input type="text" ng-model="user.name" /><br />
-            E-mail: <input type="email" ng-model="user.email" /><br />
-            Gender: <input type="radio" ng-model="user.gender" value="male" />male
-            <input type="radio" ng-model="user.gender" value="female" />female<br />
-            <button ng-click="reset()">RESET</button>
-            <button ng-click="update(user)">SAVE</button>
-        </form>
-        <pre>form = {{user | json}}</pre>
-        <pre>master = {{master | json}}</pre>
-    </div>
-
+		<div >
+			<form novalidate class="simple-form">
+				Name: <input type="text" ng-model="user.name" /><br />
+				E-mail: <input type="email" ng-model="user.email" /><br />
+				Gender: <input type="radio" ng-model="user.gender" value="male" />male
+				<input type="radio" ng-model="user.gender" value="female" />female<br />
+				<button ng-click="reset()">RESET</button>
+				<button ng-click="update(user)">SAVE</button>
+			</form>
+			<pre>form = {{user | json}}</pre>
+			<pre>master = {{master | json}}</pre>
+			<pre>projects = {{projects}}</pre>
+		</div>
+	</div>
+	
+	<!-- output template -->
+	<div ng-view></div>
+	
 </div>
 </body>
 </html>
