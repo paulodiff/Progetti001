@@ -1,0 +1,46 @@
+Ember.js
+
+Tutorial
+http://www.adobe.com/devnet/html5/articles/flame-on-a-beginners-guide-to-emberjs.html
+
+
+BackBone Tutorial
+http://dailyjs.com/2012/11/29/backbone-tutorial-1/
+
+Tutorial e link a PATTERN
+http://vmirgorod.name/blog/building-iosandroid-mobile-app-using-backbonejs-jquerymobile-and-html
+
+tutorial per la creazione di un app
+http://adrianmejia.com/blog/2012/09/11/backbone-dot-js-for-absolute-beginners-getting-started/
+
+
+Storage Cloud per la memorizzazione dei dati
+Storing your Application Data in the Cloud with Parse.com and the JavaScript SDK
+http://coenraets.org/blog/2013/04/sample-app-storing-your-application-data-in-the-cloud-with-parse-com-and-the-javascript-sdk/
+
+
+- Parse.com dati nel cloud
+
+- RedBean PHP ORM php con possibilità RESTful
+
+- Breeze Js
+
+- MongoLab cloud db - 1mongolab.com  demo_123/root/password
+
+Esempio con le route e i template detail 
+http://coenraets.org/blog/2012/02/sample-application-with-angular-js/
+
+Progetto AngularJs
+----------------------------------------------------------------------------------------------
+
+Form con controller per inserimento dati su mongolab.com
+
+
+REST service php - mysql con Slim + RedBean
+http://www.ibm.com/developerworks/library/x-slim-rest/
+
+App di riferimento:
+https://github.com/angular/angular-seed/
+
+Multiple Routing
+http://gregorypratt.github.io/AngularDynamicRouting/
