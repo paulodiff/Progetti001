@@ -27,45 +27,45 @@
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.js"></script>
+	<script type="text/javascript" src="angular-ui-router.js"></script>
     <script type="text/javascript" src="mongolab.js"></script>
     <script type="text/javascript" src="controllers.js"></script>
+	<script type="text/javascript" src="moment.js"></script>
 </head>
 <body>
 <div class="container-fluid" ng-controller="Controller1">
 <div class="row-fluid">
 	<div class="span3">
 	  <div class="well sidebar-nav">
+		<div ui-view="viewSideBar"></div>
 		<ul class="nav nav-list">
 		  <li class="nav-header">Progetti</li>
+		  <li>ProjectId: <input ng-model="projectId"></li>
+		  
 		  <li ng-repeat="prj in projects | filter:query">
 			       <a href="#/projects/{{prj._id.$oid}}"><p>{{prj.name | uppercase}}</a>
+				   <small>{{prj.name}}{{prj.cognome}}</small>
           </li>
 		</ul>
 	  </div><!--/.well -->
 	</div><!--/span-->
 		<div class="span9">
-		<label>Name:</label>
-		<input type="text" ng-model="yourName" placeholder="Enter a name here">
+		<a class="btn  btn-primary" href="index.html">Home</a>
+		<a class="btn  btn-primary" href="#/projects/Add">New</a>
 		<hr>
-		<h1>Hello {{yourName}}!</h1>
-
-		<div >
-			<form novalidate class="simple-form">
-				Name: <input type="text" ng-model="user.name" /><br />
-				E-mail: <input type="email" ng-model="user.email" /><br />
-				Gender: <input type="radio" ng-model="user.gender" value="male" />male
-				<input type="radio" ng-model="user.gender" value="female" />female<br />
-				<button ng-click="reset()">RESET</button>
-				<button ng-click="update(user)">SAVE</button>
-			</form>
-			<pre>form = {{user | json}}</pre>
-			<pre>master = {{master | json}}</pre>
-			<pre>projects = {{projects}}</pre>
-		</div>
+			<div ui-view="viewA">viewA</div>
+			<div ui-view="viewB">viewB</div>
+			<a href="#/route1">Route 1</a>
+			<a href="#/route2">Route 2</a>
+			<a href="#/route3">Route 3</a>
+		<hr>
+		<pre>Hello {{yourName}}!</pre>
+	    <div ng-view></div>
+		
 	</div>
 	
 	<!-- output template -->
-	<div ng-view></div>
+
 	
 </div>
 </body>
