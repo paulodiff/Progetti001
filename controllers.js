@@ -37,14 +37,14 @@ app.controller('Controller1',function ($scope, Project) {
     $scope.reset();
 
 	$scope.projects = Project.query();
-	console.log($scope.projects);
+	console.log("Getting projects... " + $scope.projects);
 	
 });
 
 
 app.controller('EditProjectController',function ($scope, $routeParams, Project, $stateParams) {
 
-	console.log('EditProjectController');
+	console.log('EditProjectController...');
 	$scope.projectId = $routeParams.projectId;
 	
 	// attenzione   
@@ -138,8 +138,16 @@ $stateProvider
 				controller: 'Controller1'
             },
 			"viewSideBar": {
-				template: '<p>{{now}}</p>',
-				controller: 'Controller1'
+				templateUrl: "partials/sidebar.html",
+				//controller: 'Controller1'
+				controller:
+				[        '$scope', '$stateParams', 'Project', 
+				 function ($scope,   $stateParams,   Project) {
+					console.log('viewSideBar controller ... ');
+					$scope.now= moment().format();
+					$scope.projects = Project.query();
+					console.log("Getting projects... " + $scope.projects);
+                }]
 			}
         }
     })
@@ -151,7 +159,7 @@ $stateProvider
                 template: '<h1>EDIT PROJECT</h1>'
             },
             "viewB": {
-                template: "<hr><pre>{{project1}}</pre><hr>",
+                templateUrl: "partials/editProject.html",
 				controller:
 				[        '$scope', '$stateParams', 'Project', 
 				 function ($scope,   $stateParams,   Project) {
@@ -160,12 +168,32 @@ $stateProvider
 				  console.log('projectId : ' +  $stateParams.projectId);
 				  var result = Project.getById($stateParams.projectId);
 				  console.log(result);
-				  $scope.project1 = result;
+				  $scope.prj = result;
+				  $scope.update = function (prj) {
+                    //$state.nsitionTo('contacts.detail.item', $stateParams);
+					alert('update:' + prj.name);
+					var project = new Project(prj);
+					project.saveOrUpdate();
+					console.log('saveOrUpdate:' + prj);
+					window.location = "#/route3";
+					//$state.transitionTo('index', $stateParams);
+                  };
+				  $scope.reset = function () {
+					alert('reset');
+				  };
                 }],
             },
 			"viewSideBar": {
-				template: '<p>{{now}}</p>',
-				controller: 'Controller1'
+				templateUrl: "partials/sidebar.html",
+				//controller: 'Controller1'
+				controller:
+				[        '$scope', '$stateParams', 'Project', 
+				 function ($scope,   $stateParams,   Project) {
+					console.log('viewSideBar controller ... ');
+					$scope.now= moment().format();
+					$scope.projects = Project.query();
+					console.log("Getting projects... " + $scope.projects);
+                }]
 			}
         }
     })
@@ -173,4 +201,10 @@ $stateProvider
 	
 	
 })
+.run(
+      [        '$rootScope', '$state', '$stateParams',
+      function ($rootScope,   $state,   $stateParams) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+ }]);
  

@@ -23,6 +23,8 @@ REST-API cloud
 - Breeze Js
 
 - MongoLab cloud db - 1mongolab.com  demo_123/root/password
+- Mongolab REST-API
+	https://support.mongolab.com/entries/20433053-REST-API-for-MongoDB
 
 Storage Cloud per la memorizzazione dei dati
 Storing your Application Data in the Cloud with Parse.com and the JavaScript SDK
