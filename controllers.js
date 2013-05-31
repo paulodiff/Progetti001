@@ -1,4 +1,4 @@
-var app = angular.module('app', ['mongolabResourceHttp','ui.state']);
+var app = angular.module('app', ['mongolabResourceHttp','ui.state','ngGrid']);
 
 app.constant('MONGOLAB_CONFIG',{API_KEY:'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_', DB_NAME:'demo_123'});
 
@@ -171,7 +171,12 @@ $stateProvider
 				  Project.getById($stateParams.projectId,function(projectITEM){
 						$scope.prjItem = projectITEM;
 					});
-				  
+				  //$scope.myData
+				  $scope.mySelections = [];				  
+				  $scope.gridOptions = { 
+					data: 'prjItem.addresses',
+					selectedItems: $scope.mySelections,
+				  };
 				  //$scope.prj.note = moment().format();
 				  //$scope.prj.note2 = moment().format();
 				  $scope.update = function (prjItemPar) {
@@ -188,6 +193,7 @@ $stateProvider
 					// push item
 					console.log('addAddressItem....');
 					$scope.prjItem.addresses.push({"street": "Stree" + moment().format("SSS"),"city": "Faketon"});
+					//$scope.$apply();
 				  };
 				  
 				  $scope.reset = function () {

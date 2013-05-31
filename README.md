@@ -67,5 +67,5 @@ http://angular-ui.github.io/ui-utils/
 Bootstrap form builder
 http://minikomi.github.io/Bootstrap-Form-Builder/
 
-Kendo UI - AngularJS
+Kendo UI - AngularJS [SKIPPED]
 http://kendo-labs.github.io/angular-kendo/#/dom
