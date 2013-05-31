@@ -25,6 +25,7 @@ REST-API cloud
 - MongoLab cloud db - 1mongolab.com  demo_123/root/password
 - Mongolab REST-API
 	https://support.mongolab.com/entries/20433053-REST-API-for-MongoDB
+	https://github.com/pkozlowski-opensource/angularjs-mongolab-promise
 
 Storage Cloud per la memorizzazione dei dati
 Storing your Application Data in the Cloud with Parse.com and the JavaScript SDK
@@ -50,6 +51,8 @@ http://gregorypratt.github.io/AngularDynamicRouting/
 
 Git Hub paulodiff/1 ... 
 
+Angular modules
+http://ngmodules.org/
 
 Angular Multiple Router 
 https://github.com/angular-ui/ui-router
@@ -59,3 +62,10 @@ http://angular-ui.github.io/ng-grid/
 
 Utils
 http://angular-ui.github.io/ui-utils/
+
+
+Bootstrap form builder
+http://minikomi.github.io/Bootstrap-Form-Builder/
+
+Kendo UI - AngularJS
+http://kendo-labs.github.io/angular-kendo/#/dom

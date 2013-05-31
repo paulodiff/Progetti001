@@ -1,13 +1,18 @@
-var app = angular.module('app', ['mongolabResource','ui.state']);
+var app = angular.module('app', ['mongolabResourceHttp','ui.state']);
 
-app.constant('API_KEY', 'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_');
+app.constant('MONGOLAB_CONFIG',{API_KEY:'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_', DB_NAME:'demo_123'});
 
-app.constant('DB_NAME', 'demo_123');
+//app.constant('API_KEY', 'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_');
 
-app.factory('Project', function ($mongolabResource) {
-    return $mongolabResource('projects');
+//app.constant('DB_NAME', 'demo_123');
+
+// app.factory('Project', function ($mongolabResource) {
+//    return $mongolabResource('projects');
+// });
+
+app.factory('Project', function ($mongolabResourceHttp) {
+    return $mongolabResourceHttp('projects');
 });
-
 
 //var injector = angular.injector(['app', 'ng']);
 //var Project = app.get('Project');
@@ -101,30 +106,26 @@ $stateProvider
                 templateUrl: "partials/index.viewA.html"
             },
             "viewB": {
-                templateUrl: "partials/index.viewB.html"
-            }
-        }
-    })
-    .state('route1', {
-        url: "/route1",
-        views: {
-            "viewA": {
-                templateUrl: "partials/route1.viewA.html"
+                template: '<p>ProjectA: <input ng-model="projectA">{{projectA}}</p>'
             },
-            "viewB": {
-                templateUrl: "partials/route1.viewB.html"
-            }
-        }
-    })
-    .state('route2', {
-        url: "/route2",
-        views: {
-            "viewA": {
-                templateUrl: "partials/route2.viewA.html"
-            },
-            "viewB": {
-                templateUrl: "partials/route2.viewB.html"
-            }
+			"viewSideBar": {
+				templateUrl: "partials/sidebar.html",
+				//template: '<li>ProjectId: <input ng-model="projectName"></li><li>{{projectName}}</li>',
+				//controller: 'Controller1'
+				controller:
+				[        '$scope', '$stateParams', 'Project', 
+				 function ($scope,   $stateParams,   Project) {
+					console.log('viewSideBar controller ... ');
+					$scope.now= moment().format();
+					//$scope.projects = Project.query();
+					Project.all(function(projects){
+						$scope.projects = projects;
+					});
+					
+					
+					console.log("Getting projects... " + $scope.projects);
+                }]
+			}
         }
     })
 	.state('route3', {
@@ -156,30 +157,43 @@ $stateProvider
         url: "/projects/:projectId",
         views: {
             "viewA": {
-                template: '<h1>EDIT PROJECT</h1>'
+                template: ''
             },
             "viewB": {
-                templateUrl: "partials/editProject.html",
+                templateUrl: "partials/editProject_BOOTSTRAP.html",
 				controller:
 				[        '$scope', '$stateParams', 'Project', 
 				 function ($scope,   $stateParams,   Project) {
                   //$scope.something = something;
                   //$scope.contact = findById($scope.contacts, $stateParams.contactId);
+				  console.log('editProject - viewB....');
 				  console.log('projectId : ' +  $stateParams.projectId);
-				  var result = Project.getById($stateParams.projectId);
-				  console.log(result);
-				  $scope.prj = result;
-				  $scope.update = function (prj) {
+				  Project.getById($stateParams.projectId,function(projectITEM){
+						$scope.prjItem = projectITEM;
+					});
+				  
+				  //$scope.prj.note = moment().format();
+				  //$scope.prj.note2 = moment().format();
+				  $scope.update = function (prjItemPar) {
                     //$state.nsitionTo('contacts.detail.item', $stateParams);
-					alert('update:' + prj.name);
-					var project = new Project(prj);
-					project.saveOrUpdate();
-					console.log('saveOrUpdate:' + prj);
+					alert('update:' + prjItemPar.name);
+					var project = new Project(prjItemPar);
+					project.$saveOrUpdate();
+					console.log('saveOrUpdate:' + prjItemPar);
 					window.location = "#/route3";
 					//$state.transitionTo('index', $stateParams);
                   };
+				  
+				  $scope.addAddressItem = function () {
+					// push item
+					console.log('addAddressItem....');
+					$scope.prjItem.addresses.push({"street": "Stree" + moment().format("SSS"),"city": "Faketon"});
+				  };
+				  
 				  $scope.reset = function () {
-					alert('reset');
+ 					alert('reset');
+					console.log($scope.prjItem.note);
+					console.log($scope.prjItem.note2);
 				  };
                 }],
             },
@@ -191,7 +205,7 @@ $stateProvider
 				 function ($scope,   $stateParams,   Project) {
 					console.log('viewSideBar controller ... ');
 					$scope.now= moment().format();
-					$scope.projects = Project.query();
+					$scope.projects = Project.query({}, {limit: 100});
 					console.log("Getting projects... " + $scope.projects);
                 }]
 			}

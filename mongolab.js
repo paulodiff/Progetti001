@@ -3,7 +3,8 @@ angular.module('mongolabResource', ['ngResource']).factory('$mongolabResource', 
     function MmongolabResourceFactory(collectionName) {
 
         var resource = $resource('https://api.mongolab.com/api/1/databases/' + DB_NAME + '/collections/' + collectionName + '/:id',
-            { apiKey:API_KEY, id:'@_id.$oid'}, { update:{ method:'PUT' } }
+            { apiKey:API_KEY, id:'@_id.$oid'}, 
+			{ update:{ method:'PUT' } }
         );
 
         resource.getById = function (id, cb, errorcb) {
