@@ -1,3 +1,13 @@
+ // parse the gridData array to find the object with testId
+function fremove_ArrayItem(array, property, value) {
+    $.each(array, function(index, result) {
+        if (result[property] == value) {
+            array.splice(index, 1);
+        }
+    });    
+};
+
+
 var app = angular.module('app', ['mongolabResourceHttp','ui.state','ngGrid']);
 
 app.constant('MONGOLAB_CONFIG',{API_KEY:'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_', DB_NAME:'demo_123'});
@@ -176,6 +186,12 @@ $stateProvider
 				  $scope.gridOptions = { 
 					data: 'prjItem.addresses',
 					selectedItems: $scope.mySelections,
+					columnDefs: [
+						{field: 'street', displayName: 'street-via', enableCellEdit: true}, 
+						{field:'city', displayName:'city'},
+						{field:'zip', displayName:'zip'}
+						
+						]
 				  };
 				  //$scope.prj.note = moment().format();
 				  //$scope.prj.note2 = moment().format();
@@ -195,6 +211,17 @@ $stateProvider
 					$scope.prjItem.addresses.push({"street": "Stree" + moment().format("SSS"),"city": "Faketon"});
 					//$scope.$apply();
 				  };
+				  
+				  $scope.delAddressItem = function () {
+					// push item
+					alert($scope.mySelections);
+					console.log('remove street .. ' + $scope.mySelections.street );
+					//fremove_ArrayItem($scope.prjItem.addresses, 'street', $scope.mySelections.street);
+					$scope.prjItem.addresses.splice(1,1);
+					console.log('deldAddressItem....' + $scope.mySelections);
+					//$scope.$apply();
+				  };
+				  
 				  
 				  $scope.reset = function () {
  					alert('reset');
@@ -228,3 +255,7 @@ $stateProvider
         $rootScope.$stateParams = $stateParams;
  }]);
  
+ 
+ // UTILS ...
+ 
+
