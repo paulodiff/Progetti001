@@ -63,7 +63,7 @@ http://angular-ui.github.io/ng-grid/
 Utils
 http://angular-ui.github.io/ui-utils/
 
-Bootstrap form builder
+LIBRO - Bootstrap form builder
 http://minikomi.github.io/Bootstrap-Form-Builder/
 
 Kendo UI - AngularJS [SKIPPED]
@@ -72,3 +72,5 @@ http://kendo-labs.github.io/angular-kendo/#/dom
 SoundCloud - TEST
 http://developers.soundcloud.com/blog/html5-widget-api
 
+TIPS & TRICKS
+http://deansofer.com/posts/view/14/AngularJs-Tips-and-Tricks-UPDATED

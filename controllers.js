@@ -8,7 +8,7 @@ function fremove_ArrayItem(array, property, value) {
 };
 
 
-var app = angular.module('app', ['mongolabResourceHttp','ui.state','ngGrid']);
+var app = angular.module('app', ['mongolabResourceHttp','ui.state','ngGrid','ui.bootstrap']);
 
 app.constant('MONGOLAB_CONFIG',{API_KEY:'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_', DB_NAME:'demo_123'});
 
@@ -69,7 +69,7 @@ app.controller('EditProjectController',function ($scope, $routeParams, Project, 
 	if ($scope.projectId != "Add") {
 		var result = Project.getById($scope.projectId);
 	} else {
-		var result = new Project({"name" : 'Andrea', "cognome": 'Rossi'});
+		var result = new Project({"_id_" : moment().unix() ,"name" : 'Andrea', "cognome": 'Rossi'});
 	}	
 	
 	$scope.project = result;
@@ -219,6 +219,13 @@ $stateProvider
 						
 						]
 				  };
+				  
+				   $scope.rr_modal_opts = {
+						backdropFade: true,
+						dialogFade:true
+					};
+				  
+				  
 				  //$scope.prj.note = moment().format();
 				  //$scope.prj.note2 = moment().format();
 				  $scope.update = function (prjItemPar) {
@@ -234,7 +241,7 @@ $stateProvider
 				  $scope.addAddressItem = function () {
 					// push item
 					console.log('addAddressItem....');
-					$scope.prjItem.addresses.push({"street": "Stree" + moment().format("SSS"),"city": "Faketon"});
+					$scope.prjItem.addresses.push({"id" : moment().unix(), "street": "Stree" + moment().format("SSS"),"city": "Faketon"});
 					//$scope.$apply();
 				  };
 				  
@@ -247,8 +254,27 @@ $stateProvider
 					console.log('deldAddressItem....' + $scope.mySelections);
 					//$scope.$apply();
 				  };
+
+
+				  $scope.apriDialogDetail = function (id) {
+					console.log('opening...:' + id);
+				  };
 				  
-				  
+				  $scope.rr_openModalDialog = function (id) {
+					console.log('opening...:' + id);
+					$scope.shouldBeOpen = true;
+					console.log('opening...:' + id);
+					//console.log();
+				  };
+					
+				  $scope.rr_closeModalDialog = function () {
+					console.log('closing...:' + id);
+					$scope.shouldBeOpen = false;
+					console.log();
+				  };
+					
+
+					
 				  $scope.reset = function () {
  					alert('reset');
 					console.log($scope.prjItem.note);
@@ -281,6 +307,31 @@ $stateProvider
         $rootScope.$stateParams = $stateParams;
  }]);
  
+ 
+var ModalDemoCtrl = function ($scope) {
+
+  $scope.open = function (id) {
+    $scope.shouldBeOpen = true;
+	console.log('opening...:' + id);
+	console.log();
+	//console.log('prj id....:' + $scope.prjItem.name);
+	//console.log('prj id....:' + $rootScope.$state);
+  };
+
+  $scope.close = function () {
+    $scope.closeMsg = 'I was closed at: ' + new Date();
+	console.log($scope.closeMsg);
+    $scope.shouldBeOpen = false;
+  };
+
+  //$scope.items = ['item1', 'item2'];
+
+  $scope.opts = {
+    backdropFade: true,
+    dialogFade:true
+  };
+
+};
  
  // UTILS ...
  
