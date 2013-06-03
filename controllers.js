@@ -109,6 +109,32 @@ app.controller('EditProjectController',function ($scope, $routeParams, Project, 
 
 app.config(function($stateProvider, $routeProvider){
 $stateProvider
+	.state('SoundCloud', {
+	url: "/SoundCloud",
+        views: {
+            "viewA": {
+                template: '<h1>SoundCloud</h1>'
+            },
+            "viewB": {
+                templateUrl: "partials/editProject_SOUNDCLOUD.html",
+				controller: 'Controller1'
+            },
+			"viewSideBar": {
+				templateUrl: "partials/sidebar.html",
+				//controller: 'Controller1'
+				controller:
+				[        '$scope', '$stateParams', 'Project', 
+				 function ($scope,   $stateParams,   Project) {
+					console.log('viewSideBar controller ... ');
+					$scope.now= moment().format();
+					$scope.projects = Project.query();
+					console.log("Getting projects... " + $scope.projects);
+                }]
+			}
+        }
+	
+	})
+
     .state('index', {
         url: "", // root route
         views: {
