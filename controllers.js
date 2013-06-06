@@ -8,7 +8,7 @@ function fremove_ArrayItem(array, property, value) {
 };
 
 
-var app = angular.module('app', ['mongolabResourceHttp','ui.state','ngGrid','ui.bootstrap']);
+var app = angular.module('app', ['mongolabResourceHttp','ui.state','ui.bootstrap']);
 
 app.constant('MONGOLAB_CONFIG',{API_KEY:'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_', DB_NAME:'demo_123'});
 
@@ -198,8 +198,8 @@ $stateProvider
             "viewB": {
                 templateUrl: "partials/editProject_BOOTSTRAP.html",
 				controller:
-				[        '$scope', '$stateParams', 'Project', 
-				 function ($scope,   $stateParams,   Project) {
+				[         '$scope', '$stateParams', 'Project', '$dialog', 
+				 function ($scope ,  $stateParams ,  Project ,  $dialog) {
                   //$scope.something = something;
                   //$scope.contact = findById($scope.contacts, $stateParams.contactId);
 				  console.log('editProject - viewB....');
@@ -208,23 +208,7 @@ $stateProvider
 						$scope.prjItem = projectITEM;
 					});
 				  //$scope.myData
-				  $scope.mySelections = [];				  
-				  $scope.gridOptions = { 
-					data: 'prjItem.addresses',
-					selectedItems: $scope.mySelections,
-					columnDefs: [
-						{field: 'street', displayName: 'street-via', enableCellEdit: true}, 
-						{field:'city', displayName:'city'},
-						{field:'zip', displayName:'zip'}
-						
-						]
-				  };
-				  
-				   $scope.rr_modal_opts = {
-						backdropFade: true,
-						dialogFade:true
-					};
-				  
+					  
 				  
 				  //$scope.prj.note = moment().format();
 				  //$scope.prj.note2 = moment().format();
@@ -256,19 +240,59 @@ $stateProvider
 				  };
 
 
-				  $scope.apriDialogDetail = function (id) {
-					console.log('opening...:' + id);
-				  };
+	
+				   var rr_dialogOptions = {
+						//backdropFade: true,
+						controller: 'Edit_Item_Ctrl',
+						templateUrl : "partials/dialogPop.html",
+						//backdrop: true,
+						//keyboard: true,
+						//backdropClick: true,
+						//resolve: {prj_Item: function(){ return angular.copy(item); }},
+						dialogFade: true
+					};
 				  
-				  $scope.rr_openModalDialog = function (id) {
-					console.log('opening...:' + id);
-					$scope.shouldBeOpen = true;
-					console.log('opening...:' + id);
-					//console.log();
+
+
+				  
+				$scope.rr_openModalDialog = function (addrItm) {
+					console.log('rr_openModalDialog start...:' + addrItm);
+					//$scope.shouldBeOpen = true;
+
+					//var d = $dialog.dialog({dialogFade: false, resolve: {item: function(){ return angular.copy(item); } }});
+                    //d.open('dialogs/item-editor.html', 'EditItemController');
+				
+					var itemToEdit = addrItm;
+				
+					//var d = $dialog.dialog(rr_dialogOptions);
+					$dialog.dialog(angular.extend(rr_dialogOptions, {
+							resolve: {item: function() {return angular.copy(itemToEdit);}}        
+							}))
+						  .open()
+						  .then(function(result) {
+							if(result) {
+							  angular.copy(result, itemToEdit);                
+							}
+							itemToEdit = undefined;
+						});
+					};
+	
+				/*$dialog.dialog(angular.extend(rr_dialogOptions, {resolve: {item: angular.copy(prj_Item)}}))
+					  .open()
+					  .then(function(result) {
+						if(result) {
+						  angular.copy(result, prj_Item);                
+						}
+						prj_Item = undefined;
+					});
 				  };
+				*/
 					
+					
+					//console.log();
+								
 				  $scope.rr_closeModalDialog = function () {
-					console.log('closing...:' + id);
+					console.log('closing...');
 					$scope.shouldBeOpen = false;
 					console.log();
 				  };
@@ -308,31 +332,29 @@ $stateProvider
  }]);
  
  
-var ModalDemoCtrl = function ($scope) {
 
-  $scope.open = function (id) {
-    $scope.shouldBeOpen = true;
-	console.log('opening...:' + id);
-	console.log();
-	//console.log('prj id....:' + $scope.prjItem.name);
-	//console.log('prj id....:' + $rootScope.$state);
+// the dialog is injected in the specified controller
+function Edit_Item_Ctrl($scope, item, dialog){
+  
+  console.log('Start Edit_Ctrl...' + item.street);
+  
+  $scope.addrItm = item;
+  
+  $scope.save = function() {
+    dialog.close($scope.addrItem);
   };
-
-  $scope.close = function () {
-    $scope.closeMsg = 'I was closed at: ' + new Date();
-	console.log($scope.closeMsg);
-    $scope.shouldBeOpen = false;
+  
+  $scope.close = function(){
+    dialog.close(undefined);
   };
-
-  //$scope.items = ['item1', 'item2'];
-
-  $scope.opts = {
-    backdropFade: true,
-    dialogFade:true
-  };
-
-};
+}
  
  // UTILS ...
  
+app.controller('Edit_Item_Controller', ['$scope', 'dialog', 'addrItm', function($scope, dialog, addrItm){
+    $scope.addrItm = addrItm;
+    $scope.submit = function(){
+        dialog.close('ok');
+    };
+}]);
 
