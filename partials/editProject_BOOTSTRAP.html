@@ -1,0 +1,83 @@
+
+<form novalidate   class="form-horizontal"  >
+<fieldset>
+
+<!-- Form Name -->
+<legend>Edit Project [{{prjItem._id.$oid}}]</legend>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">Nome</label>
+  <div class="controls">
+    <input  type="text" class="input-medium" ng-model="prjItem.name"  required>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput1">Cognome</label>
+  <div class="controls">
+    <input  type="text" class="input-xlarge" ng-model="prjItem.cognome"  required>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput1">Note</label>
+  <div class="controls">
+    <input  type="text" class="input-xlarge" ng-model="prjItem.note" >
+  </div>
+</div>
+
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput1" >Note2</label>
+  <div class="controls">
+    <input  type="text" class="input-xlarge" ng-model="prjItem.note2"  >
+  </div>
+</div>
+
+
+<!-- Detail -->
+
+<table class="table table-striped table-bordered table-condensed">
+<thead>
+	<tr>
+		<th>#</th>
+		<th>Street</th>
+        <th>Description</th>
+		<th>Action</th>
+    </tr>
+</thead>
+<tbody>
+<tr ng-repeat="addrItm in prjItem.addresses ">
+	<td>todo</td><td>{{addrItm.street}}</td><td>{{addrItm.city | uppercase}}</td>
+	<td><button class="btn btn-primary" ng-click="rr_openModalDialog(addrItm)">aOpen me!</button>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<!-- Button -->
+<div class="control-group">
+  <div class="controls">
+    <button  class="btn btn-primary" ng-click="reset()">Reset</button>
+	<button  class="btn btn-primary" ng-click="update(prjItem)">Salva</button>
+	<button  class="btn btn-primary" ng-click="addAddressItem(prjItem)">AddItem</button>
+	<button  class="btn btn-primary" ng-click="delAddressItem(prjItem)">DelItem</button>
+  </div>  
+</div>
+
+</fieldset>
+
+</form>
+
+
+
+<pre>form = {{prjItem | json}}</pre>
+<pre>myform = {{myForm | json}}</pre>
+<pre>$scope = {{$scope | json}}</pre>
+
+		

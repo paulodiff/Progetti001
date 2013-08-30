@@ -1,0 +1,22 @@
+<hr><pre>{{prjItem | json}}</pre><hr>
+
+
+<form name="form"  >
+
+
+<!-- Text input-->
+    <input   ng-model="prjItem.name"  >
+    <input    ng-model="prjItem.cognome"  >
+    <input    ng-model="prjItem.note" >
+    <input    ng-model="prjItem.note2"  >
+	<input    ng-model="cucu"  >
+    <button  class="btn btn-primary" ng-click="reset()">Reset</button>
+	<button  class="btn btn-primary" ng-click="update(prjItem)">Salva</button>
+</form>
+
+<input  type="text" class="input-xlarge" ng-model="_MARIO_"  ><pre>[{{_MARIO_}}]</pre>
+<pre>prjItem = {{prjItem | json}}</pre>
+<pre>myform = {{myForm | json}}</pre>
+<pre>$scope = {{$scope | json}}</pre>
+
+

@@ -1,0 +1,14 @@
+<ul class="nav nav-list">
+    <li>{{now}}</li>
+	<li class="nav-header">Notifications</li>
+	<li>ProjectName: <input ng-model="projectName"></li>
+	<li>{{projectName}}</li>
+    <li ng-repeat="prjItm in projects | filter:projectName"
+	    ng-class="{ active: $state.includes('editProject') && $stateParams.projectId == prjItm._id.$oid }" >
+		<a href="#/projects/{{prjItm._id.$oid}}">{{prjItm.deviceid | uppercase}}</a>
+		<small>{{prjItm.timesaved}}</small>
+		<small>{{prjItm.datesaved}}</small>
+		<small>{{prjItm.regid}}</small>
+		<pre>{{prjItm._id.$oid}}</pre>
+    </li>
+</ul>

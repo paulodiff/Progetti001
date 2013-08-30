@@ -3,8 +3,6 @@
 <head>
 	
     <link rel="stylesheet" type="text/css" href="ng-grid.css" />
-
-
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 	<style type="text/css">
 		body { padding-top: 60px; padding-bottom: 40px; }
@@ -17,6 +15,9 @@
     <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 	
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
+	
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.js"></script> -->
+	
     <script src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
 
     <!-- script type="text/javascript" src="http://code.jquery.com/jquery.js"></script -->
@@ -46,12 +47,13 @@
 		<a class="btn  btn-primary" href="#/projects/Add">New</a>
 		<a class="btn  btn-primary" href="#/route3">Route 3</a>
 		<a class="btn  btn-primary" href="#/SoundCloud">SoundCloud</a>
+		<a class="btn  btn-primary" href="#/Notifications">Notifications</a>
+		
 		<hr>
 			<div ui-view="viewA">viewA</div>
 			<div ui-view="viewB">viewB</div>
 		<hr>
 		<div ng-view></div>
-		<input  ng-model="_MARIO2_"  ><p>[{{_MARIO2_}}]</p>
 	</div>
 
 	

@@ -10,6 +10,14 @@ function fremove_ArrayItem(array, property, value) {
 
 var app = angular.module('app', ['mongolabResourceHttp','ui.state','ui.bootstrap']);
 
+
+app.config(['$httpProvider', function($httpProvider) {
+  
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  }]);
+
+
 app.constant('MONGOLAB_CONFIG',{API_KEY:'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_', DB_NAME:'demo_123'});
 
 //app.constant('API_KEY', 'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_');
@@ -23,6 +31,11 @@ app.constant('MONGOLAB_CONFIG',{API_KEY:'DFfH9ZxX0DdVQCHKMphyMwteiLdvT23_', DB_N
 app.factory('Project', function ($mongolabResourceHttp) {
     return $mongolabResourceHttp('projects');
 });
+
+app.factory('Notification_Model', function ($mongolabResourceHttp) {
+    return $mongolabResourceHttp('notifications');
+});
+
 
 //var injector = angular.injector(['app', 'ng']);
 //var Project = app.get('Project');
@@ -99,6 +112,66 @@ app.controller('EditProjectController',function ($scope, $routeParams, Project, 
 });
 
 
+app.controller('NotificationController',
+
+	function ($scope,   $stateParams,   Notification_Model, $filter, $http) {
+					console.log('NotificationController controller ... ');
+					$scope.now= moment().format();
+					$scope.projects = Notification_Model.query();
+					console.log("Getting NOTIFICATIONS... " + $scope.projects);
+					
+					$scope.selectedNotifications = function () {
+						return $filter('filter')($scope.projects, {checked: true});
+					};
+					
+					$scope.SendNotifications = function () {
+						
+						console.log('SendNotifications---START');
+											
+						
+						$http({	method: 'GET', 
+								url: 'notification-service.php', 
+								//url: 'http://127.0.0.1', 
+								//headers: { 'Authorization' : 'key=AIzaSyBp249VakoQG3mNuXedhYJedjtaioiKIKg' },
+								//cache: false,
+								//withCredentials : true,
+								params: { Authorization : 'key=AIzaSyBp249VakoQG3mNuXedhYJedjtaioiKIKg',
+										  par2 : 2
+										},
+								data : { 
+											collapse_key: 'score_update',
+											time_to_live: 108,
+											delay_while_idle: true,
+											data: {
+												score: "4x8",
+												foreground : true,
+												soundname : "bell.mp3",
+												message : "SALUTONI!BELLI!1",
+												msgcnt : "12",
+												time: "15:16.2342"
+											},
+											registration_ids: [ "APA91bGGGhKkhR2GE1TppjDw1XC9FXOHQzD4ZH_kebJmEGHfXM2erRjt3G9t9jfrh81Jez-gpzBgdlnCqqjnS8NHdDgZ6FlGJ4jxqrsz2Qtjrt6kDG8LahAjNlkWH9of_crBLP8QH_kCDXkmnzOParKV_KsAyMlgnA" ] 
+										}
+								}).
+							  success(function(data, status) {
+								$scope.status = status;
+								$scope.data = data;
+							  }).
+							  error(function(data, status) {
+								$scope.data = data || "Request failed";
+								$scope.status = status;
+							});
+							
+							console.log('SendNotifications--END');
+							
+					};
+					
+
+                });
+
+
+
+
 //app.config(['$routeProvider', function($routeProvider) {
 //  $routeProvider.
 //      when('/projects', {templateUrl: 'partials/projects-list.html',   controller: 'Controller1'}).
@@ -109,6 +182,37 @@ app.controller('EditProjectController',function ($scope, $routeParams, Project, 
 
 app.config(function($stateProvider, $routeProvider){
 $stateProvider
+
+	.state('Notifications', {
+	url: "/Notifications",
+        views: {
+            "viewA": {
+                template: '<h1>Notifications</h1>'
+            },
+            "viewB": {
+                templateUrl: "partials/editProject_NOTIFICATIONS.html",
+				controller: 'NotificationController'
+				//[        '$scope', '$stateParams', 'Notification_Model', '$filter', '$http', 
+				 
+            },
+			"viewSideBar": {
+				templateUrl: "partials/sidebarNOTIFICATIONS.html",
+				//controller: 'Controller1'
+				controller:
+				[        '$scope', '$stateParams', 'Notification_Model', 
+				 function ($scope,   $stateParams,   Notification_Model) {
+					console.log('viewSideBar controller ... ');
+					$scope.now= moment().format();
+					$scope.projects = Notification_Model.query();
+					console.log("Getting NOTIFICATIONS... " + $scope.projects);
+                }]
+			}
+        }
+	
+	})
+
+
+
 	.state('SoundCloud', {
 	url: "/SoundCloud",
         views: {
@@ -341,7 +445,7 @@ function Edit_Item_Ctrl($scope, item, dialog){
   $scope.addrItm = item;
   
   $scope.save = function() {
-    dialog.close($scope.addrItem);
+    dialog.close($scope.addrItm);
   };
   
   $scope.close = function(){
